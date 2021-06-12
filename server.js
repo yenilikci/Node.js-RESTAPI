@@ -11,8 +11,15 @@ const server = http.createServer((req,res) => {
     //res.setHeader('Content-Type','text/html')
     //res.write('<h1>Merhaba Node.js</h1>')
     //res.end()
-    res.writeHead(200,{'Content-Type':'application/json'})
-    res.end(JSON.stringify(kullanicilar))
+    if(req.url === '/api/kullanicilar' && req.method === 'GET'){
+        res.writeHead(200,{'Content-Type':'application/json'})
+        res.end(JSON.stringify(kullanicilar))
+    } else {
+        res.writeHead(404,{'Content-Type':'application/json'})
+        res.end(JSON.stringify({mesaj:'Yönlendirme Geçersiz'}))
+    }
+
+  
 })
 
 //port numarası ayarlaması
