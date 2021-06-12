@@ -44,5 +44,14 @@ function update(id,kullaniciVerisi){
     }) 
 }
 
+//kullanıcı silme
+function remove(id){
+    return new Promise((resolve,reject) => {
+        let kullaniciListesi = kullanicilar.filter((k) => k.id !== id)
+        dosyayaYaz('./data/kullaniciDB.json',kullaniciListesi)
+        resolve()
+    })
+}
+
 //dışarıya aktaralım
-module.exports = {findAll,findById,create,update}
+module.exports = {findAll,findById,create,update,remove}

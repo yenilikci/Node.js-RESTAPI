@@ -78,5 +78,23 @@ async function updateKullanici(req,res,id){
     }
 }
 
+//kullanıcı silme
+async function deleteKullanici(req,res,id){    
+    try {
+        const kullanici = await Kullanici.findById(id)
+        //kullanıcı bulunma kontrolü
+        if(!kullanici){
+            res.writeHead(404,{'Content-Type':'application/json'})
+            res.end(JSON.stringify({'mesaj':'kullanıcı bulunamadı'})) 
+        }else { //kullanıcı varsa
+            await Kullanici.remove(id)
+            res.writeHead(200,{'Content-Type':'application/json'})
+            res.end(JSON.stringify({'mesaj':`Kullanıcı id=${id} silindi`})) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //dışarıya aktarma
-module.exports = {getKullanicilar,getKullanici,createKullanici,updateKullanici}
+module.exports = {getKullanicilar,getKullanici,createKullanici,updateKullanici,deleteKullanici}
