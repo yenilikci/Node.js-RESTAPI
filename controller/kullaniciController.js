@@ -1,5 +1,7 @@
 //model
 const Kullanici = require('../models/kullaniciModel')
+//post bodysi için
+const {getPostData} = require('../utils')
 
 //server tarafından kullanılacak, tüm kullanıcıları getirecek
 async function getKullanicilar(req,res){    
@@ -33,10 +35,15 @@ async function getKullanici(req,res,id){
 //kullanıcı oluşturma
 async function createKullanici(req,res){
     try {
+        
+        const body = await getPostData(req)
+        const {isim,email} = JSON.parse(body)
+
         const kullanici = {
-            isim:'test',
-            email:'test@github.com'
+            isim,
+            email
         }
+        
         const yeniKullanici = await Kullanici.create(kullanici)
         res.writeHead(201,{'Content-Type':'application/json'})
         return res.end(JSON.stringify(yeniKullanici)) 
