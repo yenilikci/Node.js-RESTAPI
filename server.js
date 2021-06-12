@@ -1,7 +1,9 @@
 //http paketleri
 const http = require('http')
-//kullanıcı verileri
-const kullanicilar = require('./data/kullaniciDB.json')
+//kullanıcı controller
+const {getKullanicilar} = require('./controller/kullaniciController')
+/*kullanıcı verileri
+const kullanicilar = require('./data/kullaniciDB.json')*/
 
 //server oluşturma
 const server = http.createServer((req,res) => {
@@ -12,14 +14,11 @@ const server = http.createServer((req,res) => {
     //res.write('<h1>Merhaba Node.js</h1>')
     //res.end()
     if(req.url === '/api/kullanicilar' && req.method === 'GET'){
-        res.writeHead(200,{'Content-Type':'application/json'})
-        res.end(JSON.stringify(kullanicilar))
+        getKullanicilar(req,res)
     } else {
         res.writeHead(404,{'Content-Type':'application/json'})
         res.end(JSON.stringify({mesaj:'Yönlendirme Geçersiz'}))
     }
-
-  
 })
 
 //port numarası ayarlaması
