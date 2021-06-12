@@ -1,6 +1,9 @@
 //veriye erişelim
 const kullanicilar =  require('../data/kullaniciDB.json')
+//benzersiz kullanıcı id'leri
 const {v4:uuidv4} = require('uuid')
+//dosyaya yazma fonk
+const {dosyayaYaz} = require('../utils')
 
 //tüm kullanıcılar
 function findAll(){
@@ -25,6 +28,7 @@ function create(kullanici){
             ...kullanici
         }
         kullanicilar.push(yeni)
+        dosyayaYaz('./data/kullaniciDB.json',kullanicilar)
         resolve(yeni)
     })
 }
