@@ -1,20 +1,18 @@
 //http paketleri
 const http = require('http')
 //kullanıcı controller
-const {getKullanicilar} = require('./controller/kullaniciController')
-/*kullanıcı verileri
-const kullanicilar = require('./data/kullaniciDB.json')*/
+const {getKullanicilar,getKullanici} = require('./controller/kullaniciController')
 
 //server oluşturma
 const server = http.createServer((req,res) => {
-    //console.log(req.url)
-    //console.log(req.method);
-    //res.statusCode = 200
-    //res.setHeader('Content-Type','text/html')
-    //res.write('<h1>Merhaba Node.js</h1>')
-    //res.end()
+    
+    // api/kullanicilar , GET
     if(req.url === '/api/kullanicilar' && req.method === 'GET'){
         getKullanicilar(req,res)
+    } // api/kullanici/id , GET 
+    else if(req.url.match(/\/api\/kullanici\/([0-9]+)/) && req.method === 'GET'){
+        const id = req.url.split('/')[3] //split ile ayır
+        getKullanici(req,res,id)
     } else {
         res.writeHead(404,{'Content-Type':'application/json'})
         res.end(JSON.stringify({mesaj:'Yönlendirme Geçersiz'}))

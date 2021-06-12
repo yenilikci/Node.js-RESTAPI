@@ -8,5 +8,13 @@ function findAll(){
     });
 }
 
+//id'ye göre kullanıcı
+function findById(id){
+    return new Promise((resolve,reject) => {
+        const kullanici = kullanicilar.find((k) => k.id == id)
+        resolve(kullanici)
+    })
+}
+
 //dışarıya aktaralım
-module.exports = {findAll}
+module.exports = {findAll,findById}
