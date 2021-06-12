@@ -1,7 +1,7 @@
 //http paketleri
 const http = require('http')
 //kullanıcı controller
-const {getKullanicilar,getKullanici} = require('./controller/kullaniciController')
+const {getKullanicilar,getKullanici,createKullanici} = require('./controller/kullaniciController')
 
 //server oluşturma
 const server = http.createServer((req,res) => {
@@ -13,7 +13,11 @@ const server = http.createServer((req,res) => {
     else if(req.url.match(/\/api\/kullanici\/([0-9]+)/) && req.method === 'GET'){
         const id = req.url.split('/')[3] //split ile ayır
         getKullanici(req,res,id)
-    } else {
+    } //api/kullanici , POST
+    else if(req.url === '/api/kullanici' && req.method === 'POST') {
+        createKullanici(req,res)
+    }
+    else {
         res.writeHead(404,{'Content-Type':'application/json'})
         res.end(JSON.stringify({mesaj:'Yönlendirme Geçersiz'}))
     }

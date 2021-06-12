@@ -30,5 +30,20 @@ async function getKullanici(req,res,id){
     }
 }
 
+//kullanıcı oluşturma
+async function createKullanici(req,res){
+    try {
+        const kullanici = {
+            isim:'test',
+            email:'test@github.com'
+        }
+        const yeniKullanici = await Kullanici.create(kullanici)
+        res.writeHead(201,{'Content-Type':'application/json'})
+        return res.end(JSON.stringify(yeniKullanici)) 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //dışarıya aktarma
-module.exports = {getKullanicilar,getKullanici}
+module.exports = {getKullanicilar,getKullanici,createKullanici}
