@@ -52,5 +52,31 @@ async function createKullanici(req,res){
     }
 }
 
+//kullanıcı güncelle
+async function updateKullanici(req,res,id){    
+    try {
+        const kullanici = await Kullanici.findById(id)
+        //kullanıcı bulunma kontrolü
+        if(!kullanici){
+            res.writeHead(404,{'Content-Type':'application/json'})
+            res.end(JSON.stringify({'mesaj':'kullanıcı bulunamadı'})) 
+        }else { //kullanıcı varsa
+            const body = await getPostData(req)
+            const {isim,email} = JSON.parse(body)
+            //body'de ki veri yoksa veya belli alanlar için kullanıcının verileri
+            const kullaniciVerisi = {
+                isim:isim || kullanici.isim,
+                email:email || kullanici.email
+            }
+
+            const updateKullanici = await Kullanici.update(id,kullaniciVerisi)
+            res.writeHead(200,{'Content-Type':'application/json'})
+            res.end(JSON.stringify(updateKullanici)) 
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //dışarıya aktarma
-module.exports = {getKullanicilar,getKullanici,createKullanici}
+module.exports = {getKullanicilar,getKullanici,createKullanici,updateKullanici}

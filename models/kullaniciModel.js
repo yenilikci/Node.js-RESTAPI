@@ -30,8 +30,19 @@ function create(kullanici){
         kullanicilar.push(yeni)
         dosyayaYaz('./data/kullaniciDB.json',kullanicilar)
         resolve(yeni)
-    })
+    }) 
+}
+
+//kullanıcı güncelleme
+function update(id,kullaniciVerisi){
+
+    return new Promise((resolve,reject) => {
+        const index = kullanicilar.findIndex((k) => k.id === id)
+        kullanicilar[index] = {id,...kullaniciVerisi}
+        dosyayaYaz('./data/kullaniciDB.json',kullanicilar)
+        resolve(kullanicilar[index])
+    }) 
 }
 
 //dışarıya aktaralım
-module.exports = {findAll,findById,create}
+module.exports = {findAll,findById,create,update}
